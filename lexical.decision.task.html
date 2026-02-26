@@ -8,13 +8,18 @@
    </head>
   <body></body>
   <script>
-    const jsPsych = initJsPsych();
+    const jsPsych = initJsPsych({
+      on_finish: function() {
+        jsPsych.data.get().localSave('csv', 'lexical_decision_data.csv');
+      }
+    });
+    var timeline = [];
 
- //var welcome = {
-   //   type: jsPsychHtmlKeyboardResponse,
-  //    stimulus: "Welcome to the experiment. Press any key to begin."
-  //  };
- //   timeline.push(welcome);
+ var welcome = {
+     type: jsPsychHtmlKeyboardResponse,
+     stimulus: "Welcome to the experiment! You will be presented with words and non-words. Press 'w' if the item is a real word, and 'n' if it is not a real word. Good luck!"
+   };
+   timeline.push(welcome);
 
      var fixation = {
         type: jsPsychHtmlKeyboardResponse,
@@ -55,8 +60,8 @@ var test_stimuli = [
         randomize_order: true
     };
 
-
-    jsPsych.run([lexical_procedure]);
+timeline.push(lexical_procedure);
+    jsPsych.run(timeline);
   </script>
 </html>
 
